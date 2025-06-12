@@ -2,6 +2,7 @@
 
 :root {
     --primary: rgb(247, 236, 95);
+    --black: #000;
     // Default layout
     --default-layout-header-height: 60px;
     --default-layout-width: 1150px;
@@ -22,4 +23,10 @@ body {
     font-size: 1.6rem;
     line-height: 1.5rem;
     text-rendering: optimizeSpeed;
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
 }
