@@ -41,7 +41,7 @@
         padding: 12px 0;
         background-color: transparent;
         outline: none;
-        caret-color: rgb(209, 200, 66);
+        caret-color: rgb(47, 182, 162);
     }
 
     input:not(:placeholder-shown) ~ .search-btn {
@@ -90,4 +90,10 @@
     &:hover {
         background-color: rgba(22, 24, 35, 0.03);
     }
+}
+
+.action {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
