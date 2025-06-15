@@ -1,20 +1,40 @@
 // Menu wrapper
 .menu-list {
     width: 224px;
+    padding: 8px 0;
 }
 
-//Header
+.menu-item {
+    width: 100%;
+    font-weight: 600;
+    padding: 11px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background: rgba(22, 24, 35, 0.03);
+    }
+}
+
+// Header
 .header {
     position: relative;
-    align-content: center;
+    display: flex;
+    align-items: center;
     height: 50px;
     margin-top: -8px;
+    padding: 0 16px;
 }
 
 .back-btn {
     width: 50px;
     height: 100%;
     background-color: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .header-title {
@@ -22,4 +42,6 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-weight: 600;
+    font-size: 1.6rem;
 }

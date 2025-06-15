@@ -102,3 +102,23 @@
     background: transparent;
     padding: 4px 8px;
 }
+
+.action-btn {
+    padding: 4px 16px;
+    background-color: transparent;
+    font-size: 2.4rem;
+    color: var(--primary);
+    cursor: pointer;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 12px;
+    cursor: pointer;
+}

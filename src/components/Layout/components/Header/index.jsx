@@ -4,15 +4,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCircleQuestion,
     faCircleXmark,
+    faCloudUpload,
     faEarthAsia,
     faEllipsisVertical,
     faKeyboard,
     faMagnifyingGlass,
     faSignIn,
     faSpinner,
+    faUser,
+    faGear,
+    faCoins,
+    faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
-import Tippy from '@tippyjs/react/headless';
-import 'tippy.js/dist/tippy.css'; // optional
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react'; // optional
+import 'tippy.js/dist/tippy.css';
 
 import Button from '../../../Button';
 import styles from './Header.module.scss';
@@ -22,6 +28,7 @@ import AccountItem from '../../../AccountItem';
 import Menu from '../../../Popper/Menu';
 
 const cx = classNames.bind(styles);
+const currentUser = true;
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
@@ -58,6 +65,29 @@ const Header = () => {
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
     };
+    const userMenu = [
+        {
+            icon: <FontAwesomeIcon icon={faUser} />,
+            title: 'View profile',
+            to: '/@nguyenvana',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faCoins} />,
+            title: 'Get coins',
+            to: '/coin',
+        },
+        {
+            icon: <FontAwesomeIcon icon={faGear} />,
+            title: 'Settings',
+            to: '/settings',
+        },
+        ...MENU_ITEMS,
+        {
+            icon: <FontAwesomeIcon icon={faRightFromBracket} />,
+            title: 'Log out',
+            to: '/feedback',
+        },
+    ];
     return (
         <>
             <header className={cx('wrapper')}>
@@ -92,16 +122,40 @@ const Header = () => {
                             </button>
                         </Tippy>
                     </div>
-                    <div className={cx('action')}>
-                        <Button text>Upload</Button>
-                        <Button text={false} primary leftIcon={<FontAwesomeIcon icon={faSignIn} className="" />}>
-                            Log in
-                        </Button>
 
-                        <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
-                            <button className={cx('more-btn')}>
-                                <FontAwesomeIcon icon={faEllipsisVertical} />
-                            </button>
+                    <div className={cx('action')}>
+                        {currentUser ? (
+                            <>
+                                <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
+                                    <button className={cx('action-btn')}>
+                                        <FontAwesomeIcon icon={faCloudUpload} />
+                                    </button>
+                                </Tippy>
+                            </>
+                        ) : (
+                            <>
+                                <Button text>Upload</Button>
+                                <Button
+                                    text={false}
+                                    primary
+                                    leftIcon={<FontAwesomeIcon icon={faSignIn} className="" />}
+                                >
+                                    Log in
+                                </Button>
+                            </>
+                        )}
+                        <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                            {currentUser ? (
+                                <img
+                                    src="https://i.pinimg.com/736x/96/c1/46/96c146d85768edf567549a2b093fb42c.jpg"
+                                    className={cx('user-avatar')}
+                                    alt="Nguyen van a"
+                                />
+                            ) : (
+                                <button className={cx('more-btn')}>
+                                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                                </button>
+                            )}
                         </Menu>
                     </div>
                 </div>
