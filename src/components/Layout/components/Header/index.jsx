@@ -26,6 +26,7 @@ import images from '../../../../assets/images';
 import { Wrapper as PropperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
 import Menu from '../../../Popper/Menu';
+import Image from '../../../Image';
 
 const cx = classNames.bind(styles);
 const currentUser = true;
@@ -146,7 +147,7 @@ const Header = () => {
                         )}
                         <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
                             {currentUser ? (
-                                <img
+                                <Image
                                     src="https://i.pinimg.com/736x/96/c1/46/96c146d85768edf567549a2b093fb42c.jpg"
                                     className={cx('user-avatar')}
                                     alt="Nguyen van a"
