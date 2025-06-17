@@ -1,13 +1,14 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './AccountItem.module.scss';
+import Image from '../Image';
 
 const cx = classNames.bind(styles);
 
 const AccountItem = () => {
     return (
         <div className={cx('wrapper')}>
-            <img
+            <Image
                 src="https://i.pinimg.com/736x/dd/e0/fc/dde0fcc5632f23bbe3548cb94941882a.jpg"
                 alt="Hoaa"
                 className={cx('avatar')}

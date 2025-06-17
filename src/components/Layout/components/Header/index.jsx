@@ -1,32 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames/bind';
+import Button from '../../../Button';
+import Tippy from '@tippyjs/react'; // optional
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faCircleQuestion,
-    faCircleXmark,
-    faCloudUpload,
     faEarthAsia,
     faEllipsisVertical,
     faKeyboard,
-    faMagnifyingGlass,
-    faSignIn,
-    faSpinner,
     faUser,
     faGear,
     faCoins,
     faRightFromBracket,
+    faCloudUpload,
+    faSignIn,
 } from '@fortawesome/free-solid-svg-icons';
-import HeadlessTippy from '@tippyjs/react/headless';
-import Tippy from '@tippyjs/react'; // optional
+
 import 'tippy.js/dist/tippy.css';
 
-import Button from '../../../Button';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
-import { Wrapper as PropperWrapper } from '../../../Popper';
-import AccountItem from '../../../AccountItem';
 import Menu from '../../../Popper/Menu';
 import Image from '../../../Image';
+import Search from '../Search';
 
 const cx = classNames.bind(styles);
 const currentUser = true;
@@ -54,14 +50,6 @@ const MENU_ITEMS = [
 ];
 
 const Header = () => {
-    const [searchResult, setSearchResult] = useState([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([]);
-        }, 3000);
-    }, []);
-
     //Handle logic
     const handleMenuChange = (menuItem) => {
         console.log(menuItem);
@@ -89,6 +77,7 @@ const Header = () => {
             to: '/feedback',
         },
     ];
+
     return (
         <>
             <header className={cx('wrapper')}>
@@ -96,33 +85,9 @@ const Header = () => {
                     <div className={cx('logo')}>
                         <img src={images.logo} alt="" />
                     </div>
-                    <div className={cx('search')}>
-                        <Tippy
-                            visible={searchResult.length > 0}
-                            interactive={true}
-                            render={(attrs) => (
-                                <div className={cx('search-hint-box')} tabIndex="-1" {...attrs}>
-                                    <PropperWrapper>
-                                        <h4 className={cx('search-title')}>Accounts</h4>
-                                        <AccountItem />
-                                        <AccountItem />
-                                        <AccountItem />
-                                    </PropperWrapper>
-                                </div>
-                            )}
-                        >
-                            <input type="text" placeholder="Search accounts and videos" spellCheck={false} />
-                        </Tippy>
-                        <button className={cx('clear')}>
-                            <FontAwesomeIcon icon={faCircleXmark} className="" />
-                        </button>
-                        <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
-                        <Tippy content="Search">
-                            <button className={cx('search-btn')}>
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className="" />
-                            </button>
-                        </Tippy>
-                    </div>
+
+                    {/*Import Search Logic Here */}
+                    <Search />
 
                     <div className={cx('action')}>
                         {currentUser ? (
