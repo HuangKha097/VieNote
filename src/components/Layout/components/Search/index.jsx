@@ -8,21 +8,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Wrapper as PropperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
 
-import { faCircleXmark, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 const Search = () => {
     const [searchResult, setSearchResult] = useState([]);
     const [searchInput, setSearchInput] = useState('');
     const [showSearchResult, setShowSearchResult] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     const searchRef = useRef();
 
     useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 3]);
-        }, 0);
-    }, []);
+        // không kiểm tra searchInput, khi input rỗng (""), code sẽ gọi API với q=, dẫn đến lỗi 422 (Unprocessable Content) từ server.
+        if (!searchInput.trim()) {
+            setSearchResult([]);
+            return;
+        }
+
+        setLoading(true);
+
+        // encodeURIComponent(searchInput) : mã hóa để tránh người dùng nhập "? &" gây lỗi URL
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchInput)}&type=less`)
+            .then((res) => res.json())
+            .then((res) => {
+                setSearchResult(res.data || []);
+                setLoading(false);
+            })
+            .catch(() => {
+                setLoading(false);
+            });
+    }, [searchInput]);
 
     const handleClearInputSearch = () => {
         setSearchInput('');
@@ -43,9 +59,10 @@ const Search = () => {
                         <div className={cx('search-hint-box')} tabIndex="-1" {...attrs}>
                             <PropperWrapper>
                                 <h4 className={cx('search-title')}>Accounts</h4>
-                                <AccountItem />
-                                <AccountItem />
-                                <AccountItem />
+                                {/* (searchResult || []).map(...) đảm bảo luôn có một mảng để .map(), tránh lỗi "Cannot read properties of undefined (reading 'map')". */}
+                                {(searchResult || []).map((result) => (
+                                    <AccountItem key={result.id} data={result} />
+                                ))}
                             </PropperWrapper>
                         </div>
                     )}
@@ -62,12 +79,12 @@ const Search = () => {
                     />
                 </HeadlessTippy>
                 {/* Convert searchInput to Boolean , if searchInput is exist then visible clear button */}
-                {!!searchInput && (
+                {!!searchInput && !loading && (
                     <button className={cx('clear')} onClick={handleClearInputSearch}>
                         <FontAwesomeIcon icon={faCircleXmark} className="" />
                     </button>
                 )}
-                {/* <FontAwesomeIcon className={cx('loading')} icon={faSpinner} /> */}
+                {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 <Tippy content="Search">
                     <button className={cx('search-btn')}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className="" />
