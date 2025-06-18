@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Wrapper as PropperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
 import { useDebounce } from '../../../../hooks';
+import * as searchServices from '../../../../utils/apiServices/searchService';
 
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
@@ -25,24 +26,22 @@ const Search = () => {
     useEffect(() => {
         // không kiểm tra searchInput, khi input rỗng (""), code sẽ gọi API với q=, dẫn đến lỗi 422 (Unprocessable Content) từ server.
         // !debounced? = !(debounced || '')
-        if (!debounced?.trim()) {
+        if (!(debounced || '').trim()) {
             setSearchResult([]);
             return;
         }
 
-        setLoading(true);
+        const fetchApi = async () => {
+            setLoading(true);
 
+            const result = await searchServices.search(debounced);
+            setSearchResult(result);
+
+            setLoading(false);
+        };
+        fetchApi();
         // encodeURIComponent(searchInput) : mã hóa để tránh người dùng nhập "? &" gây lỗi URL
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
-            .then((res) => res.json())
-            .then((res) => {
-                setSearchResult(res.data || []);
-                setLoading(false);
-            })
-            .catch(() => {
-                setLoading(false);
-            });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        //Axios using XMLHttpRequest
     }, [debounced]);
 
     const handleClearInputSearch = () => {
