@@ -7,21 +7,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { Wrapper as PropperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
+import { useDebounce } from '../../../../hooks';
 
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 const Search = () => {
-    const [searchResult, setSearchResult] = useState([]);
     const [searchInput, setSearchInput] = useState('');
+    const [searchResult, setSearchResult] = useState([]);
     const [showSearchResult, setShowSearchResult] = useState(true);
     const [loading, setLoading] = useState(false);
+
+    const debounced = useDebounce(searchInput, 500);
 
     const searchRef = useRef();
 
     useEffect(() => {
         // không kiểm tra searchInput, khi input rỗng (""), code sẽ gọi API với q=, dẫn đến lỗi 422 (Unprocessable Content) từ server.
-        if (!searchInput.trim()) {
+        // !debounced? = !(debounced || '')
+        if (!debounced?.trim()) {
             setSearchResult([]);
             return;
         }
@@ -29,7 +33,7 @@ const Search = () => {
         setLoading(true);
 
         // encodeURIComponent(searchInput) : mã hóa để tránh người dùng nhập "? &" gây lỗi URL
-        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(searchInput)}&type=less`)
+        fetch(`https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(debounced)}&type=less`)
             .then((res) => res.json())
             .then((res) => {
                 setSearchResult(res.data || []);
@@ -38,7 +42,8 @@ const Search = () => {
             .catch(() => {
                 setLoading(false);
             });
-    }, [searchInput]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debounced]);
 
     const handleClearInputSearch = () => {
         setSearchInput('');
