@@ -9,7 +9,7 @@ import Header from './Header';
 const cx = classNames.bind(styles);
 
 const defaultFn = () => {};
-const Menu = ({ children, items = [], onChange = defaultFn }) => {
+const Menu = ({ children, items = [], hideOnClick = false, onChange = defaultFn }) => {
     const [history, setHistory] = useState([{ data: items }]);
     //Lay phan tu cuoi cua mang history
     const current = history[history.length - 1];
@@ -38,6 +38,7 @@ const Menu = ({ children, items = [], onChange = defaultFn }) => {
         <Tippy
             offset={[12, 8]}
             interactive
+            hideOnClick={hideOnClick}
             placement="bottom-end"
             delay={[0, 800]}
             render={(attrs) => (

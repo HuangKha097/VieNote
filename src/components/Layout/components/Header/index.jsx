@@ -1,6 +1,6 @@
 import React from 'react';
+import routesConfig from '../../../../config/routes';
 import classNames from 'classnames/bind';
-import Button from '../../../Button';
 import Tippy from '@tippyjs/react'; // optional
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -15,9 +15,10 @@ import {
     faCloudUpload,
     faSignIn,
 } from '@fortawesome/free-solid-svg-icons';
-
 import 'tippy.js/dist/tippy.css';
+import { Link } from 'react-router-dom';
 
+import Button from '../../../Button';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
 import Menu from '../../../Popper/Menu';
@@ -83,7 +84,9 @@ const Header = () => {
             <header className={cx('wrapper')}>
                 <div className={cx('inner')}>
                     <div className={cx('logo')}>
-                        <img src={images.logo} alt="" />
+                        <Link to={routesConfig.home}>
+                            <img src={images.logo} alt="" />
+                        </Link>
                     </div>
 
                     {/*Import Search Logic Here */}
@@ -93,9 +96,11 @@ const Header = () => {
                         {currentUser ? (
                             <>
                                 <Tippy delay={[0, 200]} content="Upload video" placement="bottom">
-                                    <button className={cx('action-btn')}>
-                                        <FontAwesomeIcon icon={faCloudUpload} />
-                                    </button>
+                                    <Link to="/upload">
+                                        <button className={cx('action-btn')}>
+                                            <FontAwesomeIcon icon={faCloudUpload} />
+                                        </button>
+                                    </Link>
                                 </Tippy>
                             </>
                         ) : (

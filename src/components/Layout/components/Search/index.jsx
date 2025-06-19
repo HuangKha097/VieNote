@@ -53,6 +53,13 @@ const Search = () => {
     const handleHideSearchResult = () => {
         setShowSearchResult(false);
     };
+    const handleChangeInput = (e) => {
+        const searchValue = e.target.value;
+        if (!searchValue.startsWith(' ')) {
+            setSearchInput(searchValue);
+        }
+    };
+
     return (
         <>
             <div className={cx('search')}>
@@ -78,7 +85,7 @@ const Search = () => {
                         placeholder="Search accounts and videos"
                         spellCheck={false}
                         value={searchInput}
-                        onChange={(e) => setSearchInput(e.target.value)}
+                        onChange={handleChangeInput}
                         onFocus={() => setShowSearchResult(true)}
                     />
                 </HeadlessTippy>
@@ -90,7 +97,7 @@ const Search = () => {
                 )}
                 {loading && <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />}
                 <Tippy content="Search">
-                    <button className={cx('search-btn')}>
+                    <button className={cx('search-btn')} onMouseDown={(e) => e.preventDefault()}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} className="" />
                     </button>
                 </Tippy>
