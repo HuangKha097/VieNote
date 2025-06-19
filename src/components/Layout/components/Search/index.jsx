@@ -64,6 +64,7 @@ const Search = () => {
         <>
             <div className={cx('search')}>
                 <HeadlessTippy
+                    appendTo={() => document.body}
                     visible={showSearchResult && searchInput.trim().length > 0}
                     interactive={true}
                     render={(attrs) => (

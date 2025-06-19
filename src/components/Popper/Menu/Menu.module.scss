@@ -4,9 +4,12 @@
     padding: 8px 0;
 }
 
+.menu-body {
+    overflow-y: auto;
+}
+
 .menu-item {
     width: 100%;
-    font-weight: 600;
     padding: 11px 16px;
     display: flex;
     align-items: center;
@@ -21,10 +24,10 @@
 .header {
     position: relative;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     height: 50px;
     margin-top: -8px;
-    padding: 0 16px;
 }
 
 .back-btn {
@@ -34,7 +37,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
+    padding: 0 16px;
 }
 
 .header-title {

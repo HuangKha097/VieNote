@@ -43,16 +43,16 @@ const Menu = ({ children, items = [], hideOnClick = false, onChange = defaultFn 
             delay={[0, 800]}
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                    <PropperWrapper>
+                    <PropperWrapper className={cx('menu-popper')}>
                         {history.length > 1 && (
                             <Header
-                                title="Languge"
+                                title="Language"
                                 onBack={() => {
                                     setHistory((pre) => pre.slice(0, pre.length - 1));
                                 }}
                             />
                         )}
-                        {renderItems()}
+                        <div className={cx('menu-body')}> {renderItems()}</div>
                     </PropperWrapper>
                 </div>
             )}
