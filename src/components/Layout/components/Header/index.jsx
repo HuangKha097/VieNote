@@ -75,7 +75,7 @@ const Header = () => {
         {
             icon: <FontAwesomeIcon icon={faRightFromBracket} />,
             title: 'Log out',
-            to: '/feedback',
+            to: '/',
         },
     ];
 
@@ -109,6 +109,7 @@ const Header = () => {
                                 <Button
                                     text={false}
                                     primary
+                                    to="/"
                                     leftIcon={<FontAwesomeIcon icon={faSignIn} className="" />}
                                 >
                                     Log in

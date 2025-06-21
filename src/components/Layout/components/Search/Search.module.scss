@@ -18,11 +18,12 @@
     display: flex;
     border: 1.5px solid transparent;
     input {
+        padding: 12px 0;
+        padding-right: 40px;
         flex: 1;
         color: #828282;
         font-size: 1.6rem;
         color: var(--black);
-        padding: 12px 0;
         background-color: transparent;
         outline: none;
         caret-color: rgb(47, 182, 162);

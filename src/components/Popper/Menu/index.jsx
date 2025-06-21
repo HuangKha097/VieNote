@@ -34,6 +34,23 @@ const Menu = ({ children, items = [], hideOnClick = false, onChange = defaultFn 
         });
     };
 
+    const handleBack = () => {
+        setHistory((pre) => pre.slice(0, pre.length - 1));
+    };
+
+    const renderResult = (attrs) => (
+        <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
+            <PropperWrapper className={cx('menu-popper')}>
+                {history.length > 1 && <Header title="Language" onBack={handleBack} />}
+                <div className={cx('menu-body')}> {renderItems()}</div>
+            </PropperWrapper>
+        </div>
+    );
+
+    const handleResetToFirstMenu = () => {
+        setHistory((pre) => pre.slice(0, 1));
+    };
+
     return (
         <Tippy
             offset={[12, 8]}
@@ -41,22 +58,8 @@ const Menu = ({ children, items = [], hideOnClick = false, onChange = defaultFn 
             hideOnClick={hideOnClick}
             placement="bottom-end"
             delay={[0, 800]}
-            render={(attrs) => (
-                <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
-                    <PropperWrapper className={cx('menu-popper')}>
-                        {history.length > 1 && (
-                            <Header
-                                title="Language"
-                                onBack={() => {
-                                    setHistory((pre) => pre.slice(0, pre.length - 1));
-                                }}
-                            />
-                        )}
-                        <div className={cx('menu-body')}> {renderItems()}</div>
-                    </PropperWrapper>
-                </div>
-            )}
-            onHide={() => setHistory((pre) => pre.slice(0, 1))}
+            render={renderResult}
+            onHide={handleResetToFirstMenu}
         >
             {children}
         </Tippy>

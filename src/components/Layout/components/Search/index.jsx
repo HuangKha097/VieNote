@@ -16,17 +16,17 @@ const cx = classNames.bind(styles);
 const Search = () => {
     const [searchInput, setSearchInput] = useState('');
     const [searchResult, setSearchResult] = useState([]);
-    const [showSearchResult, setShowSearchResult] = useState(true);
+    const [showSearchResult, setShowSearchResult] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const debounced = useDebounce(searchInput, 500);
+    const debouncedValue = useDebounce(searchInput, 500);
 
     const searchRef = useRef();
 
     useEffect(() => {
         // không kiểm tra searchInput, khi input rỗng (""), code sẽ gọi API với q=, dẫn đến lỗi 422 (Unprocessable Content) từ server.
-        // !debounced? = !(debounced || '')
-        if (!(debounced || '').trim()) {
+        // !debouncedValue? = !(debouncedValue || '')
+        if (!(debouncedValue || '').trim()) {
             setSearchResult([]);
             return;
         }
@@ -34,7 +34,7 @@ const Search = () => {
         const fetchApi = async () => {
             setLoading(true);
 
-            const result = await searchServices.search(debounced);
+            const result = await searchServices.search(debouncedValue);
             setSearchResult(result);
 
             setLoading(false);
@@ -42,7 +42,7 @@ const Search = () => {
         fetchApi();
         // encodeURIComponent(searchInput) : mã hóa để tránh người dùng nhập "? &" gây lỗi URL
         //Axios using XMLHttpRequest
-    }, [debounced]);
+    }, [debouncedValue]);
 
     const handleClearInputSearch = () => {
         setSearchInput('');
