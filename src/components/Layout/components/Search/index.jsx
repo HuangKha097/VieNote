@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Wrapper as PropperWrapper } from '../../../Popper';
 import AccountItem from '../../../AccountItem';
 import { useDebounce } from '../../../../hooks';
-import * as searchServices from '../../../../utils/apiServices/searchService';
+import * as searchServices from '../../../../utils/services/searchService';
 
 import { faCircleXmark, faMagnifyingGlass, faSpinner } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
