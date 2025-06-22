@@ -1,5 +1,4 @@
 import React from 'react';
-import routesConfig from '../../../../config/routes';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react'; // optional
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,6 +17,7 @@ import {
 import 'tippy.js/dist/tippy.css';
 import { Link } from 'react-router-dom';
 
+import routesConfig from '../../../../config/routes';
 import Button from '../../../Button';
 import styles from './Header.module.scss';
 import images from '../../../../assets/images';
