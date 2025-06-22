@@ -6,6 +6,7 @@ import styles from './Sidebar.module.scss';
 import routes from '../../../../config/routes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faUserGroup, faVideoCamera } from '@fortawesome/free-solid-svg-icons';
+import SuggestedAccounts from '../SuggestedAccounts';
 
 const cx = classNames.bind(styles);
 const Sidebar = () => {
@@ -28,6 +29,8 @@ const Sidebar = () => {
                     icon={<FontAwesomeIcon className={cx('icons')} icon={faVideoCamera} />}
                 />
             </Menu>
+            <SuggestedAccounts label={'Suggested Accounts'} />
+            <SuggestedAccounts label={'Following Accounts'} />
         </aside>
     );
 };
