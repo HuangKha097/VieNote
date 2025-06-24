@@ -1,0 +1,52 @@
+.wrapper{ 
+    width: 320px;
+    padding: 20px;
+}
+
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.avatar{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.body{
+    margin-top: 12px;
+    color: #161823;
+
+}
+
+.nickname{
+    margin-bottom: 4px;
+    font-size: 1.8rem;
+}
+
+.name{
+    font-size: 1.4rem;
+}
+
+.analytics{
+    margin-top: 10px;
+    font-size: 1.8rem;
+
+}
+// de chon value thu 2 
+// .value + .value: khi 2 values dung ke nhau
+// .value ~ .value : khi o giux 2 value co 1 phan tu ngan cach
+.value ~ .value{
+    margin-left: 20px;
+}
+
+.label{
+    color: #161823bf;
+
+}
+
