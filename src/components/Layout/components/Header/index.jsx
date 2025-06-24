@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react'; // optional
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,9 +24,10 @@ import images from '../../../../assets/images';
 import Menu from '../../../Popper/Menu';
 import Image from '../../../Image';
 import Search from '../Search';
+import Login from '../../../Popper/Login';
 
 const cx = classNames.bind(styles);
-const currentUser = true;
+
 const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
@@ -51,10 +52,20 @@ const MENU_ITEMS = [
 ];
 
 const Header = () => {
+    const [login, setLogin] = useState(false);
+    const [currentUser, setCurrentUser] = useState(true);
+
     //Handle logic
-    const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
+    const handlePopupLogin = () => {
+        setLogin(true);
     };
+
+    const handleMenuChange = (menuItem) => {
+        if (menuItem.title === 'Log out') {
+            setCurrentUser(false);
+        }
+    };
+
     const userMenu = [
         {
             icon: <FontAwesomeIcon icon={faUser} />,
@@ -83,11 +94,11 @@ const Header = () => {
         <>
             <header className={cx('wrapper')}>
                 <div className={cx('inner')}>
-                    <div className={cx('logo')}>
+                    <btn className={cx('logo-btn')}>
                         <Link to={routesConfig.home}>
                             <img src={images.logo} alt="" />
                         </Link>
-                    </div>
+                    </btn>
 
                     {/*Import Search Logic Here */}
                     <Search />
@@ -111,12 +122,18 @@ const Header = () => {
                                     primary
                                     to="/"
                                     leftIcon={<FontAwesomeIcon icon={faSignIn} className="" />}
+                                    onClick={handlePopupLogin}
                                 >
                                     Log in
                                 </Button>
                             </>
                         )}
-                        <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+                        <Menu
+                            //  render lại component Menu (bằng cách thay đổi key của Menu)
+                            key={currentUser ? 'user' : 'guest'}
+                            items={currentUser ? userMenu : MENU_ITEMS}
+                            onChange={handleMenuChange}
+                        >
                             {currentUser ? (
                                 <Image
                                     src="https://i.pinimg.com/736x/96/c1/46/96c146d85768edf567549a2b093fb42c.jpg"
@@ -132,6 +149,7 @@ const Header = () => {
                     </div>
                 </div>
             </header>
+            {login && <Login close={() => setLogin(false)} />}
         </>
     );
 };
